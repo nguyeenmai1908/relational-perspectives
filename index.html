@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -153,8 +153,181 @@
       .unit-framing { padding: 3rem 1.5rem; }
     }
   </style>
+  <style id="udl-layer">
+    /* ============================================================
+       EDCI 487 · UDL layer (same behaviour as the newer modules)
+       Display options, skip link, focus, motion, contrast tokens
+       ============================================================ */
+    :root {
+      --clay-deep: #a64d1f; --clay-ink: #8a3f17; --ember-light: #f6bb92;
+      --sage-light: #b8d1ab; --ink-soft: #465543; --on-dark: #d7dacf;
+      --ink-green: #2c3a2a; --forest-2: #2f4a2f; --field-line: #6c7a68;
+    }
+    html.pref-large { font-size: 118.75%; }
+    html.pref-dyslexia body, html.pref-dyslexia body * { font-family: 'Lexend', 'DM Sans', system-ui, sans-serif !important; font-style: normal !important; }
+    html.pref-dyslexia body { letter-spacing: 0.02em; word-spacing: 0.12em; }
+    html.pref-dyslexia p, html.pref-dyslexia li, html.pref-dyslexia label { line-height: 1.9 !important; }
+
+    :focus-visible { outline: 3px solid var(--clay-deep); outline-offset: 3px; border-radius: 2px; }
+    .sidebar :focus-visible, .sidebar-toggle:focus-visible, .hero :focus-visible, .section-header :focus-visible, .concepts :focus-visible, .unit-framing :focus-visible, .transition-card :focus-visible { outline-color: var(--sand); }
+    .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 10000; background: var(--white); color: var(--near-black); padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: 600; text-decoration: none; }
+    .skip-link:focus { top: 1rem; }
+    .udl-sr-only { position: absolute !important; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    main:focus { outline: none; }
+
+    /* 44px+ targets */
+    .sidebar-toggle { width: 48px !important; height: 48px !important; top: 1rem !important; left: 1rem !important; }
+    .sidebar-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .sidebar-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+    .sidebar-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    [data-udl-click] { cursor: pointer; }
+
+    /* Display options panel in the sidebar */
+    .sidebar { display: flex; flex-direction: column; }
+    .display-options { margin-top: auto; padding: 1.25rem 1.25rem 1.5rem 2rem; border-top: 1px solid rgba(122,158,110,0.2); }
+    .display-options h2 { font: 600 0.75rem 'DM Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-dark); margin: 0 0 0.6rem; }
+    .pref-btn { display: flex; width: 100%; justify-content: space-between; align-items: center; min-height: 44px; margin-bottom: 0.4rem; padding: 0.5rem 0.75rem; background: transparent; color: var(--cream); border: 1px solid rgba(215,218,207,0.45); border-radius: 6px; font: 500 0.88rem 'DM Sans', sans-serif; cursor: pointer; text-align: left; }
+    .pref-btn:hover { background: rgba(232,213,176,0.08); }
+    .pref-btn .state { font-size: 0.75rem; color: var(--on-dark); }
+    .pref-btn[aria-pressed="true"] { background: rgba(232,213,176,0.15); border-color: var(--sand); }
+
+    /* Motion: honour the OS setting and calm mode */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
+      .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+    }
+    /* Calm mode: animations jump to their end state (so nothing stays hidden) and never loop */
+    html.pref-calm *, html.pref-calm *::before, html.pref-calm *::after { animation-duration: 0.001ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
+    html.pref-calm .reveal, html.pref-calm .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+    html.pref-calm body::before, html.pref-calm body::after { display: none; }
+    /* Contrast: colours from the newer modules' palette (WCAG AA 4.5:1) */
+    :root { --clay: #a64d1f; }
+    .arrow-label { color: var(--ink-soft) !important; }
+    .attach-label { color: var(--ink-soft) !important; }
+    .attach-meta { color: var(--ink-soft) !important; }
+    .begin-sub { color: var(--ink-soft) !important; }
+    .bio-body > p { color: var(--on-dark) !important; }
+    .bio-label { color: var(--ember-light) !important; }
+    .callout-source { color: var(--ink-soft) !important; }
+    .cards-counter { color: var(--on-dark) !important; }
+    .cas-desc { color: var(--cream) !important; }
+    .cas-intro { color: var(--on-dark) !important; }
+    .cas-label { color: var(--ember-light) !important; }
+    .cb-source { color: var(--ink-soft) !important; }
+    .check-time { color: var(--ink-soft) !important; }
+    .closing-body { color: var(--on-dark) !important; }
+    .closing-eyebrow { color: var(--ember-light) !important; }
+    .closing-hero-body > p { color: var(--on-dark) !important; }
+    .closing-hero-body { color: var(--on-dark) !important; }
+    .closing-hero-eyebrow { color: var(--ember-light) !important; }
+    .concepts-count { color: var(--on-dark) !important; }
+    .content-block .block-inner > p, .concept-grid-section .block-inner > p { color: var(--ink-soft) !important; }
+    .definition-card-attribution { color: var(--ink-soft) !important; }
+    .eyebrow { color: var(--clay-ink) !important; }
+    .fact-strip-source { color: var(--ink-soft) !important; }
+    .hero-desc { color: var(--on-dark) !important; }
+    .kc-textarea-prompt { color: var(--ink-soft) !important; }
+    .nav-course { color: var(--on-dark) !important; }
+    .optional-desc { color: var(--ink-soft) !important; }
+    .outcome-body { color: var(--ink-soft) !important; }
+    .overview-body { color: var(--ink-soft) !important; }
+    .overview-left > p { color: var(--ink-soft) !important; }
+    .pb-attribution { color: var(--on-dark) !important; }
+    .pb-label { color: var(--on-dark) !important; }
+    .predict-ack-text { color: var(--ink-soft) !important; }
+    .predict-hint { color: var(--ink-soft) !important; }
+    .predict-label { color: var(--clay-ink) !important; }
+    .principle-num { color: var(--ink-soft) !important; }
+    .principles-label { color: var(--clay-ink) !important; }
+    .private-note { color: var(--ink-soft) !important; }
+    .problem-desc { color: var(--on-dark) !important; }
+    .problem-num { color: var(--ember-light) !important; }
+    .question-badge.badge-apply { color: var(--clay-deep) !important; }
+    .question-num { color: var(--ink-soft) !important; }
+    .quiz-kicker { color: var(--ember-light) !important; }
+    .quiz-sub { color: var(--on-dark) !important; }
+    .reading-card-meta { color: var(--ink-soft) !important; }
+    .refl-label { color: var(--ember-light) !important; }
+    .refl-note { color: var(--ink-soft) !important; }
+    .refl-optional > p { color: var(--ink-soft) !important; }
+    .refl-optional-label { color: var(--ink-soft) !important; }
+    .reflection-card-label { color: var(--clay-ink) !important; }
+    .reflection-note { color: var(--ink-soft) !important; }
+    .reflection-subhead { color: var(--ink-soft) !important; }
+    .scenario-ad-source { color: var(--on-dark) !important; }
+    .scenario-num { color: var(--on-dark) !important; }
+    .section-label { color: var(--ember-light) !important; }
+    .sh-label { color: var(--ember-light) !important; }
+    .sh-time { color: var(--on-dark) !important; }
+    .stat-label { color: var(--cream) !important; }
+    .tactic-number { color: var(--ink-soft) !important; }
+    .takeaway-marker { color: var(--ink-soft) !important; }
+    .takeaways-label { color: var(--ember-light) !important; }
+    .time-note { color: var(--ink-soft) !important; }
+    .timeline-source { color: var(--ink-soft) !important; }
+    .tool-note { color: var(--on-dark) !important; }
+    .tool-section .eyebrow { color: var(--ember-light) !important; }
+    .tool-url { color: var(--on-dark) !important; }
+    .transition-card .block-inner > p { color: var(--on-dark) !important; }
+    .unit-desc { color: var(--on-dark) !important; }
+    .unit-eyebrow { color: var(--ember-light) !important; }
+    .video-caption { color: var(--on-dark) !important; }
+    .video-meta > span { color: var(--ink-soft) !important; }
+    .video-meta-duration { color: var(--on-dark) !important; }
+    .video-meta-label { color: var(--on-dark) !important; }
+    .word-count { color: var(--ink-soft) !important; }
+    .card-hint { color: #ffffff !important; }
+    .video-meta strong, .bio-body em, .concept-def em, .closing-hero-body em, .definition-card-attribution em, .callout-source em, .definition-term span { color: inherit !important; }
+    .sh-number[data-n]::before { content: attr(data-n); }
+    .overview .section-label, .takeaways-block .takeaways-label { color: var(--clay-deep) !important; }
+    .principle-num, .problem-num { opacity: 1 !important; }
+    .flip-front { background-color: var(--clay-deep) !important; background-image: linear-gradient(150deg, #b5572a, var(--clay-deep) 60%, var(--clay-ink)) !important; }
+    .takeaways-header .takeaways-label { color: var(--ember-light) !important; }
+    /* Reflow (WCAG 1.4.10): section header wraps on phones, as in the newer modules */
+    .sh-center { min-width: 0; }
+    .sh-title { font-size: clamp(2rem, 4.5vw, 2.8rem) !important; overflow-wrap: anywhere; }
+    @media (max-width: 768px) {
+      .section-header { padding: 5rem 1.5rem 2rem !important; }
+      .section-header-row { flex-wrap: wrap !important; gap: 0.5rem 1rem !important; }
+      .sh-number { font-size: 4.5rem !important; }
+      .sh-time { flex-shrink: 1 !important; flex-basis: 100% !important; }
+    }
+    @media (max-width: 768px) {
+      .optional-cta { flex-shrink: 1 !important; max-width: 100%; white-space: normal; }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .tooltip-bubble { width: min(240px, 70vw) !important; left: auto !important; right: 0 !important; transform: none !important; }
+      .tooltip-bubble::after { left: auto !important; right: 4px !important; transform: none !important; }
+    }
+    /* Flip cards: the back face is hidden until the card is turned (screen readers read one side at a time) */
+    .flip-card:not(.flipped) .flip-back { visibility: hidden; transition: visibility 0s linear 0.35s; }
+    .flip-card.flipped .flip-front { visibility: hidden; transition: visibility 0s linear 0.35s; }
+    .flip-front .card-term { color: var(--white) !important; }
+    .concept-front .concept-tag { color: var(--clay-ink) !important; }
+    .findings-eyebrow { color: var(--ember-light) !important; }
+    .concept-flip:not(.flipped) .concept-back, .bm-flip:not(.flipped) .bm-back, .lens-flip:not(.flipped) .lens-back { visibility: hidden; transition: visibility 0s linear 0.35s; }
+    .concept-flip.flipped .concept-front, .bm-flip.flipped .bm-front, .lens-flip.flipped .lens-front { visibility: hidden; transition: visibility 0s linear 0.35s; }
+    /* Hero second line: solid light sage, as in the newer modules (outlined text is hard to read) */
+    .hero-title .line-2, .line-2 { color: var(--sage-light) !important; -webkit-text-stroke: 0 !important; -webkit-text-fill-color: var(--sage-light) !important; }
+    .bm-front .bm-unit, .bm-front .bm-hint { color: var(--on-dark) !important; }
+    .finding-headline { color: var(--ember-light) !important; }
+    .s-tag { color: var(--clay-deep) !important; }
+    .check-section .check-eyebrow, .check-section .q-num { color: var(--clay-ink) !important; }
+    .lenses-section .eyebrow, .tool-section .eyebrow { color: var(--ember-light) !important; }
+    .overshoot-reveal { background: linear-gradient(135deg, var(--clay-ink), var(--clay-deep)) !important; }
+    .overshoot-reveal .or-pre, .overshoot-reveal .or-sub, .overshoot-reveal .or-body { color: var(--white) !important; }
+    .case-section .reflection-subhead, .case-section .reflection-note { color: var(--on-dark) !important; }
+    .case-eyebrow, .refl-submit-banner em { color: var(--ember-light) !important; }
+    .closing-hero em { color: var(--on-dark) !important; }
+    .scaffold-content { color: var(--ink-soft) !important; }
+    /* No faded rgba() text: solid palette colours instead */
+    .focus-block span, .check-sub, .lens-hint { color: var(--ink-soft) !important; }
+    .focus-item .line, .warmup-text { color: var(--ink-green) !important; }
+    .case-stat-label, .finding-body, .lenses-section .section-intro { color: var(--on-dark) !important; }
+
+  </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <button class="sidebar-toggle" aria-label="Toggle navigation">
   <span class="bar"></span>
@@ -196,9 +369,15 @@
       <span class="nav-time">5 min</span>
     </a>
   </nav>
+  <section class="display-options" aria-labelledby="display-h">
+    <h2 id="display-h">Display options</h2>
+    <button type="button" class="pref-btn" data-pref="large" aria-pressed="false"><span>Larger text</span><span class="state" aria-hidden="true">Off</span></button>
+    <button type="button" class="pref-btn" data-pref="dyslexia" aria-pressed="false"><span>Dyslexia-friendly font</span><span class="state" aria-hidden="true">Off</span></button>
+    <button type="button" class="pref-btn" data-pref="calm" aria-pressed="false"><span>Calm mode (no motion)</span><span class="state" aria-hidden="true">Off</span></button>
+  </section>
 </aside>
 
-<main class="page-layout">
+<main id="main" tabindex="-1" class="page-layout">
 
 <section class="hero">
   <div class="hero-bg">
@@ -409,6 +588,146 @@
   });
 
   overlay.addEventListener('click', closeSidebar);
+</script>
+<script id="udl-layer-js">
+/* ============================================================
+   EDCI 487 · UDL layer behaviour
+   Display options, accessible menu, keyboard-friendly cards,
+   announced feedback. Works alongside each page's own script.
+   ============================================================ */
+(function () {
+  var NS = 'edci487';
+  var root = document.documentElement;
+  function get(k, d) { try { var v = localStorage.getItem(NS + ':' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }
+  function set(k, v) { try { localStorage.setItem(NS + ':' + k, JSON.stringify(v)); } catch (e) {} }
+
+  /* Display preferences */
+  var prefs = get('prefs', { large: false, dyslexia: false, calm: false });
+  function loadDysFont() {
+    if (document.getElementById('dys-font')) return;
+    var l = document.createElement('link');
+    l.id = 'dys-font'; l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap';
+    document.head.appendChild(l);
+  }
+  if (prefs.dyslexia) loadDysFont();
+  ['large', 'dyslexia', 'calm'].forEach(function (k) { root.classList.toggle('pref-' + k, !!prefs[k]); });
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function showAll() { document.querySelectorAll('.reveal, .reveal-stagger').forEach(function (el) { el.classList.add('visible'); }); }
+  if (prefs.calm || reduce) showAll();
+
+  document.querySelectorAll('.pref-btn').forEach(function (b) {
+    var k = b.getAttribute('data-pref');
+    b.setAttribute('aria-pressed', String(!!prefs[k]));
+    b.querySelector('.state').textContent = prefs[k] ? 'On' : 'Off';
+    b.addEventListener('click', function () {
+      prefs[k] = !prefs[k]; set('prefs', prefs);
+      b.setAttribute('aria-pressed', String(prefs[k]));
+      b.querySelector('.state').textContent = prefs[k] ? 'On' : 'Off';
+      root.classList.toggle('pref-' + k, prefs[k]);
+      if (k === 'dyslexia' && prefs.dyslexia) loadDysFont();
+      if (k === 'calm' && prefs.calm) showAll();
+    });
+  });
+
+  /* Accessible menu: the page's own script opens and closes it; this keeps
+     aria-expanded, inert, Escape and focus in step with it. */
+  var toggle = document.querySelector('.sidebar-toggle');
+  var sidebar = document.querySelector('.sidebar');
+  if (toggle && sidebar) {
+    if (!sidebar.id) sidebar.id = 'sidebar';
+    sidebar.setAttribute('aria-label', 'Module menu');
+    toggle.setAttribute('type', 'button');
+    toggle.setAttribute('aria-controls', sidebar.id);
+    toggle.querySelectorAll('.bar').forEach(function (b) { b.setAttribute('aria-hidden', 'true'); });
+    var overlay = document.querySelector('.sidebar-overlay');
+    if (overlay) overlay.setAttribute('aria-hidden', 'true');
+    var wasOpen = false;
+    function sync() {
+      var open = sidebar.classList.contains('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close module menu' : 'Open module menu');
+      if (open) {
+        sidebar.removeAttribute('inert');
+        if (!wasOpen) { var f = sidebar.querySelector('a,button'); if (f) f.focus(); }
+      } else {
+        sidebar.setAttribute('inert', '');
+      }
+      wasOpen = open;
+    }
+    sync();
+    new MutationObserver(sync).observe(sidebar, { attributes: true, attributeFilter: ['class'] });
+    function close(back) { if (sidebar.classList.contains('open')) { toggle.click(); if (back) toggle.focus(); } }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(true); });
+    sidebar.addEventListener('focusout', function (e) {
+      var to = e.relatedTarget;
+      if (to && to !== toggle && !sidebar.contains(to)) close(false);
+    });
+    var here = location.pathname.split('/').pop() || 'index.html';
+    sidebar.querySelectorAll('a[href]').forEach(function (a) {
+      if (a.getAttribute('href').split('#')[0] === here) a.setAttribute('aria-current', 'page');
+    });
+  }
+
+  /* Ghost section numbers are decoration: drawn by CSS, hidden from screen readers */
+  document.querySelectorAll('.sh-number').forEach(function (n) {
+    if (n.hasAttribute('data-n')) return;
+    n.setAttribute('data-n', n.textContent.trim());
+    n.textContent = '';
+    n.setAttribute('aria-hidden', 'true');
+  });
+
+  /* Emoji-only icons are decoration: hidden from screen readers */
+  var emojiOnly = /^[\p{Extended_Pictographic}\u{FE0F}\u{200D}\s]+$/u;
+  document.querySelectorAll('main span, main div, main i, main p').forEach(function (el) {
+    if (el.children.length || el.hasAttribute('aria-hidden')) return;
+    var t = el.textContent.trim();
+    if (t && emojiOnly.test(t)) el.setAttribute('aria-hidden', 'true');
+  });
+
+  /* Click-only cards (flip cards, options): reachable and usable by keyboard */
+  document.querySelectorAll('[onclick]').forEach(function (el) {
+    var tag = el.tagName;
+    if (tag === 'BUTTON' || tag === 'A' || tag === 'INPUT' || tag === 'SELECT' || tag === 'SUMMARY') return;
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('data-udl-click', '');
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+  });
+
+  /* Accordions and show/hide buttons: tell screen readers whether the panel is open */
+  document.querySelectorAll('button[onclick]').forEach(function (b) {
+    var m = /^toggle\w*\('([\w-]+)'\)/.exec(b.getAttribute('onclick'));
+    var panel = m && document.getElementById(m[1]);
+    if (!panel) return;
+    b.setAttribute('aria-controls', panel.id);
+    function syncExp() { b.setAttribute('aria-expanded', String(panel.classList.contains('open'))); }
+    syncExp();
+    new MutationObserver(syncExp).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  /* Feedback text is announced to screen readers when it changes */
+  document.querySelectorAll('#flipped-count, #reveal-note').forEach(function (el) { el.setAttribute('aria-live', 'polite'); });
+  document.querySelectorAll('[class*="feedback"], [id$="-fb"], [id*="-fb-"], .fb-text').forEach(function (el) {
+    if (el.closest('[aria-live]') || el.querySelector('button, input, a')) return;
+    if (/feedback-label/.test(el.className)) return;
+    el.setAttribute('aria-live', 'polite');
+  });
+
+  /* Scroll boxes: reachable by keyboard */
+  function focusScrollers() {
+    document.querySelectorAll('main *').forEach(function (el) {
+      var cs = getComputedStyle(el);
+      if (!/(auto|scroll)/.test(cs.overflowX + cs.overflowY)) return;
+      if (el.scrollWidth <= el.clientWidth + 1 && el.scrollHeight <= el.clientHeight + 1) return;
+      if (el.querySelector('a, button, input, select, textarea, [tabindex]')) return;
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    });
+  }
+  if (document.readyState === 'complete') focusScrollers(); else window.addEventListener('load', focusScrollers);
+})();
 </script>
 </body>
 </html>
